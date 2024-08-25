@@ -1,5 +1,3 @@
-Phase 1:
-    
 
-Phase 2:
-Phase 3:
+
+Preview :-https://shubhamjakate0505.github.io/Airbnb-Web/
