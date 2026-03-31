@@ -15,6 +15,7 @@ const flash=require("connect-flash");
 const passport=require("passport");
 const LocalStrategy=require("passport-local");
 const User=require("./models/user.js");
+const MongoStore = require("connect-mongo");
 
 
 const port=8080;
@@ -27,6 +28,7 @@ const userRouter=require("./router/user.js")
 
 
 const URL_DATA=process.env.MONGO_URL;
+console.log("MONGO_URL:", process.env.MONGO_URL);
 main().then((res)=>{
     console.log("Connected to db");
 }).catch(err => console.log(err));
@@ -45,19 +47,23 @@ app.use(express.static(path.join(__dirname,"/public")))
 
 
 
-
-
-const sessionOptions={
-    secret:"Shubham",
-    resave:false,
-    saveUninitialized:true,
-    cookie:{
-        expires:Date.now()+7*24*60*60*1000,
-        maxAge:7*24*60*60*1000,
-        httpOnly:true
+const sessionOptions = {
+    secret: "Shubham",
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URL,
+        crypto: {
+            secret: "abc123"
+        },
+        touchAfter: 24 * 3600
+    }),
+    cookie: {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true
     }
-
-}
+};
 
 app.use(session(sessionOptions))
 app.use(flash())
