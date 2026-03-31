@@ -1,8 +1,10 @@
+require('dotenv').config()
 const mongoose = require('mongoose');
 const initdata=require("./data");
 const Listing=require("../models/Listing.js");
+const { required } = require('joi');
 
-const URL_DATA="mongodb://127.0.0.1:27017/Wanderlust";
+const URL_DATA=process.env.MONGO_URL;
 main().then((res)=>{
     console.log("Connected to db");
 }).catch(err => console.log(err));

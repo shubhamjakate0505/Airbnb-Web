@@ -3,9 +3,6 @@ if(process.env.NODE_ENV != "production"){
     require('dotenv').config()
 }
 
-
-
-
 const express=require("express");
 const app=express();
 const mongoose = require('mongoose');
@@ -29,7 +26,7 @@ const userRouter=require("./router/user.js")
 
 
 
-const URL_DATA="mongodb://127.0.0.1:27017/Wanderlust";
+const URL_DATA=process.env.MONGO_URL;
 main().then((res)=>{
     console.log("Connected to db");
 }).catch(err => console.log(err));
