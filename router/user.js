@@ -7,10 +7,6 @@ const passport = require("passport");
 const {saveRedirectUrl}=require("../middleware.js")
 
 const usersControllers=require("../controllers/users.js")
-//const wrapAsync = require("../utils/wrapAsync");
-//const passport = require("passport");
-//const {saveRedirectUrl}=require("../middleware.js")
-//const usersControllers=require("../controllers/users.js")
 
 router.route("/singup")
 .get(usersControllers.randersingup)
@@ -21,23 +17,7 @@ router.route("/login")
 .post(saveRedirectUrl,passport.authenticate("local",{failureRedirect:'/login',failureFlash:true}),usersControllers.login)
 
 
-/* .get(usersControllers.renderSignupForm)
-.post(wrapAsync(usersControllers.singup))
 
-
-router.route("/login")
-.get(usersControllers.renderLoginFrom)
-.post(saveRedirectUrl,passport.authenticate("local",{
-    failureRedirect:"/login",
-    failureFlash:true
-}),
-usersControllers.login
-)
-
-
-
-
-router.get("/logout",usersControllers.logout) */
 
 router.get("/logout",usersControllers.logout)
 
