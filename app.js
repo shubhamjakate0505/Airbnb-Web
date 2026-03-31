@@ -19,12 +19,12 @@ const User = require("./models/user.js");
 
 const port = 8080;
 
-// Routes
+
 const listingRouter = require("./router/listing.js");
 const reviewRouter = require("./router/review.js");
 const userRouter = require("./router/user.js");
 
-// MongoDB URL
+
 const URL_DATA = process.env.MONGO_URL;
 
 // -------------------- BASIC SETUP --------------------
@@ -39,9 +39,9 @@ app.use(express.static(path.join(__dirname, "/public")));
 // -------------------- MAIN FUNCTION --------------------
 async function main() {
     await mongoose.connect(URL_DATA);
-    console.log("Connected to DB ✅");
+    console.log("Connected to DB");
 
-    // ✅ Mongo session store AFTER DB connection
+    // Mongo session store AFTER DB connection
     const store = MongoStore.create({
         mongoUrl: URL_DATA,
         crypto: {
@@ -96,6 +96,7 @@ app.get("/", (req, res) => {
     app.use("/", userRouter);
 
     // -------------------- ERROR HANDLING --------------------
+    
     app.all("*", (req, res, next) => {
         next(new ExpressError(404, "Page Not Found"));
     });
@@ -105,7 +106,7 @@ app.get("/", (req, res) => {
         res.status(status).render("error.ejs", { message });
     });
 
-    // ✅ START SERVER AFTER EVERYTHING
+    // START SERVER AFTER EVERYTHING
     app.listen(port, () => {
         console.log(`Server running on port ${port} 🚀`);
     });
