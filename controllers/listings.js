@@ -22,6 +22,7 @@ module.exports.showListings=async(req,res)=>{
 }
 
 module.exports.createListing=async(req,res,next)=>{
+console.log("USER:", req.user);
 let url=req.file.path;
 let filename=req.file.path    
 const newListing=new Listing(req.body.listing)

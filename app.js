@@ -51,7 +51,7 @@ app.use(express.static(path.join(__dirname,"/public")))
 
 
 const sessionOptions={
-    secret:"apnacolleges",
+    secret:"Shubham",
     resave:false,
     saveUninitialized:true,
     cookie:{
