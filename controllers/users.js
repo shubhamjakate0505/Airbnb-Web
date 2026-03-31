@@ -6,7 +6,7 @@ module.exports.randersingup=(req,res)=>{
 
 
 
-module.exports.singup=async(req,res)=>{
+module.exports.singup=async(req,res,next)=>{
     try{
         let {username,email,password}=req.body
         const newUser=new User({email,username})
