@@ -45,7 +45,7 @@ async function main() {
     const store = MongoStore.create({
         mongoUrl: URL_DATA,
         crypto: {
-            secret: "abc234",
+            secret: "thisIsMyVeryStrongSecretKey123@#",
         },
         touchAfter: 24 * 3600,
     });
@@ -56,7 +56,7 @@ async function main() {
 
     const sessionOptions = {
         store: store,
-        secret: "abc234",
+        secret: "thisIsMyVeryStrongSecretKey123@#",
         resave: false,
         saveUninitialized: false,
         cookie: {
@@ -96,7 +96,7 @@ app.get("/", (req, res) => {
     app.use("/", userRouter);
 
     // -------------------- ERROR HANDLING --------------------
-    
+
     app.all("*", (req, res, next) => {
         next(new ExpressError(404, "Page Not Found"));
     });

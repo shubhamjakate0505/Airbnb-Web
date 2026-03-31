@@ -6,7 +6,7 @@ module.exports.randersingup=(req,res)=>{
 
 
 
-module.exports.singup=async(req,res,next)=>{
+/* module.exports.singup=async(req,res,next)=>{
     try{
         let {username,email,password}=req.body
         const newUser=new User({email,username})
@@ -25,25 +25,44 @@ module.exports.singup=async(req,res,next)=>{
         res.redirect("/singup")
     }
   
-}
+} */
 
+    module.exports.singup = async (req, res, next) => {
+    try {
+        let { username, email, password } = req.body;
+
+        const newUser = new User({ email, username });
+        const registerUser = await User.register(newUser, password);
+
+        req.login(registerUser, (err) => {
+            if (err) {
+                return next(err);
+            }
+            req.flash("success", "New User is created");
+            return res.redirect("/listings");  // ✅ FIX
+        });
+
+    } catch (e) {
+        req.flash("error", e.message);
+        return res.redirect("/singup");  // ✅ FIX
+    }
+};
 module.exports.randerloginform=(req,res)=>{
     res.render("users/login.ejs")
 }
 
-module.exports.login=async(req,res)=>{
-    req.flash("success","Welcomme back")
-    let redirectUrl=res.locals.redirectUrl || "/listings"
-    res.redirect(redirectUrl)
+module.exports.login = async (req, res) => {
+    req.flash("success", "Welcome back");
+    let redirectUrl = res.locals.redirectUrl || "/listings";
+    return res.redirect(redirectUrl); 
+};
 
-}
-
-module.exports.logout=(req,res,next)=>{
-    req.logOut((err)=>{
-        if(err){
-            return next(err)
+module.exports.logout = (req, res, next) => {
+    req.logOut((err) => {
+        if (err) {
+            return next(err);
         }
-        req.flash("success","You are Logged out Now")
-        res.redirect("/listings")
-    })
-}
+        req.flash("success", "You are Logged out Now");
+        return res.redirect("/listings"); 
+    });
+};
